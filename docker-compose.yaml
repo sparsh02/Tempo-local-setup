@@ -1,0 +1,30 @@
+version: "3.9" # optional since v1.27.0
+services:
+  # igniteconnex:
+ #add your app service here.     
+  tempo:
+    image: grafana/tempo:latest
+    volumes:
+      - ./tempo.yaml:/etc/tempo.yaml
+    ports:
+      - '55680:55680'
+    command: --config=/etc/tempo.yaml
+  otel-collector:
+    image: otel/opentelemetry-collector:latest
+    volumes:
+      - ./tempo.yaml:/etc/otel-collector/config.yaml
+    ports:
+      - '4317:4317'
+    command: --config /etc/otel-collector/config.yaml
+
+networks:
+  default:
+    external: true
+    name: ignite
+
+
+
+
+
+
+
